@@ -1,8 +1,7 @@
 import java.util.Stack;
-
 public class SmartLibrary implements LibraryADT {
     private BookBST catalogue = new BookBST();
-    private BorrowStack history = new BorrowStack();
+    private BorrowHistory history = new BorrowHistory();
 
     @Override
     public void addBook(int isbn, String title, String author) {
@@ -33,27 +32,8 @@ public class SmartLibrary implements LibraryADT {
 
     @Override
     public void displayLatestHistory() {
-        history.show();
+        history.viewHistory();
     }
 
-    //Implementing stack logic
-    private class BorrowStack {
-        private Stack<Book> stack = new Stack<>();
 
-        public void push(Book b) {
-            stack.push(b);
-        }
-
-        public void show() {
-            if (stack.isEmpty()) {
-                System.out.println("History is empty.");
-            } else {
-                System.out.println("--- Most Recent Activity ---");
-                for (int i = stack.size() - 1; i >= 0; i--) {
-                    Book b = stack.get(i);
-                    System.out.println("[ISBN: " + b.getIsbn() + "] " + b.getTitle());
-                }
-            }
-        }
-    }
 }
