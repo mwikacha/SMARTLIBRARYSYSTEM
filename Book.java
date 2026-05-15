@@ -1,8 +1,7 @@
 public class Book {
-    private int isbn;
-    private String title;
-    private String author;
-
+    int isbn;
+    String title;
+    String author;
     // BST Pointers
     Book left, right;
 
