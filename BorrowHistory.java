@@ -9,7 +9,7 @@ public class BorrowHistory {
                 return;
             }
             borrowHistory.push(book);
-            System.out.println("\"" + book.title + "\" has been added to borrow history.");
+            System.out.println("\"" + book.getTitle() + "\" has been added to borrow history.");
         }
 
         // Display all borrowed books, newest first
@@ -22,7 +22,7 @@ public class BorrowHistory {
                 for (int i = borrowHistory.size() - 1; i >= 0; i--) {
                     Book b = borrowHistory.get(i);
                     System.out.printf("[%d] ISBN: %-5d | Title: %-15s | Author: %-15s%n",
-                            (borrowHistory.size() - i), b.isbn, b.title, b.author);
+                            (borrowHistory.size() - i), b.getIsbn(), b.getTitle(), b.getAuthor());
                 }
             }
         }
