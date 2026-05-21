@@ -127,9 +127,9 @@ public class SmartLibrary implements LibraryADT {
             Book successor = findMin(node.right);
 
             // Copy successor's data into current node
-            node.isbn  = successor.getIsbn();
-            node.title  = successor.getTitle();
-            node.author = successor.getAuthor();
+            node.setIsbn(successor.getIsbn());
+            node.setTitle(successor.getTitle());
+            node.setAuthor(successor.getAuthor());
 
             // Delete the successor from the right subtree
             node.right = mirrorDelete(node.right, successor.getIsbn());
