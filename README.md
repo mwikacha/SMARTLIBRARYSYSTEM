@@ -1,6 +1,6 @@
 ﻿# 📓 Smart Library System
 
-> 🎓 **Course Project**: WIA 1002 Data Structure
+> 🎓 **Course Project**: WIA 1002 Data Structure<br>
 > 📅 **Semester**: 2, 2025/2026
 
 ---
@@ -85,8 +85,8 @@ SMARTLIBRARYSYSTEM/
 
 | NO | NAME | CONTRIBUTIONS | DESCRIPTION |
 | :---: | --- | :---: | --- |
-| 1 | ARISHA BINTI MOHAMAD | ADT Designer & Book Entity | Create the Interface for the Library System to ensure "Information Hiding."  Design the core Book entity class to encapsulate book details. |
-| 2 | CHUA JEE HENG | Catalogue Architect & Record Finder | Build a BST to store book titles and authors indexed by ISBN.  Implement a recursive Search function within the BST to find books by ISBN. |
+| 1 | ARISHA BINTI MOHAMAD | ADT Designer & Book Entity | Create the Interface for the Library System to ensure "Information Hiding."<br>Design the core Book entity class to encapsulate book details. |
+| 2 | CHUA JEE HENG | Catalogue Architect & Record Finder | Build a BST to store book titles and authors indexed by ISBN.<br>Implement a recursive Search function within the BST to find books by ISBN. |
 | 3 | LAW XIN WEY | Borrowing History | Implement a Stack to keep track of books checked out (Most recent on top). |
 | 4 | KEERTTI A/P RASANRAN | Smart Library Manager | Handle the central administrative logic, including the borrowing and returning process by coordinating the search from the catalogue etc. |
 | 5 | HAN NING | Functional Console Interface | Deliver a Console Interface that allows a user (Librarian or Student) to interact with the system without modifying the source code. |
