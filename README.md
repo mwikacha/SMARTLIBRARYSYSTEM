@@ -6,21 +6,21 @@
 ---
 
 ## Table of Contents
-- [Team Members] (#-team members)
-- [Project Overview] ()
-- [Features]
-- [Additional Features]
-- [Project Structure]
-- [Screenshot]
-- [Contribution]
-- [Challenges Faced]
+- [Team Members](#10-team-members)
+- [Project Overview](#20-project-overview)
+- [Features](#30-features)
+- [Additional Features](#40-additional-features)
+- [Project Structure](#50-project-structure)
+- [Screenshot](#60-screenshot)
+- [Contribution](#70-contribution)
+- [Challenges Faced](#80-challenges-faced)
 
 --- 
 
 ## 1.0 Team Members
 
 | NO | NAME | MATRIX NUMBER |
-| --- | --- | --- |
+| :---: | --- | :---: |
 | 1 | ARISHA BINTI MOHAMAD | 25073436 |
 | 2 | CHUA JEE HENG | 25058634 |
 | 3 | LAW XIN WEY | 25062483 |
@@ -37,7 +37,7 @@ Books are stored in a database (BST) for fast searching by ISBN. When a student 
 
 ---
 
-## 3.0 Feature Implemented
+## 3.0 Features
 
 | Feature | Description |
 | --- | --- |
@@ -84,9 +84,9 @@ SMARTLIBRARYSYSTEM/
 ## 7.0 Contribution
 
 | NO | NAME | CONTRIBUTIONS | DESCRIPTION |
-| --- | --- | --- | --- |
-| 1 | ARISHA BINTI MOHAMAD | ADT Designer & Book Entity | Create the Interface for the Library System to ensure "Information Hiding." Design the core Book entity class to encapsulate book details. |
-| 2 | CHUA JEE HENG | Catalogue Architect & Record Finder | Build a BST to store book titles and authors indexed by ISBN. Implement a recursive Search function within the BST to find books by ISBN. |
+| :---: | --- | :---: | --- |
+| 1 | ARISHA BINTI MOHAMAD | ADT Designer & Book Entity | Create the Interface for the Library System to ensure "Information Hiding."  Design the core Book entity class to encapsulate book details. |
+| 2 | CHUA JEE HENG | Catalogue Architect & Record Finder | Build a BST to store book titles and authors indexed by ISBN.  Implement a recursive Search function within the BST to find books by ISBN. |
 | 3 | LAW XIN WEY | Borrowing History | Implement a Stack to keep track of books checked out (Most recent on top). |
 | 4 | KEERTTI A/P RASANRAN | Smart Library Manager | Handle the central administrative logic, including the borrowing and returning process by coordinating the search from the catalogue etc. |
 | 5 | HAN NING | Functional Console Interface | Deliver a Console Interface that allows a user (Librarian or Student) to interact with the system without modifying the source code. |
