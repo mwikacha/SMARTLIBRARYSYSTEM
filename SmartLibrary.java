@@ -159,25 +159,7 @@ public class SmartLibrary implements LibraryADT {
 
     @Override
     public void returnBook(int isbn, int lateDays) {
-
-        //search for the book
-        Book book = catalogue.search(isbn);
-
-        if (book == null) {
-            System.out.println("Book not found in system.");
-            return;
-        }
-
          double fine = book.calculateFine(lateDays);
-
-         System.out.println("Book returned successfully: " + book.getTitle());
-
-          if (fine > 0) {
-            System.out.println("Late days: " + lateDays);
-            System.out.println("Fine: RM" + fine);
-        } else {
-            System.out.println("No fine. Thank you for returning on time.");
-        }
         
     }
 }
