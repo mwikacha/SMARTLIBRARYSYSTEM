@@ -27,4 +27,43 @@ public class BookBST {
         if (r == null || r.getIsbn() == i) return r;
         return (i < r.getIsbn()) ? sea(r.left, i) : sea(r.right, i);
     }
+
+    // Public delete method
+    public void remove(int isbn) {
+        root = deleteNode(root, isbn);
+    }
+
+    // Private recursive delete helper
+    private Book deleteNode(Book node, int isbn) {
+        if (node == null) {
+            return null; // Book not found
+        }
+
+        if (isbn < node.getIsbn()) {
+            node.left = deleteNode(node.left, isbn);
+        } else if (isbn > node.getIsbn()) {
+            node.right = deleteNode(node.right, isbn);
+        } else {
+            // Found the node
+            
+            // Case 1 & 2: One child or no children
+            if (node.left == null) return node.right;
+            if (node.right == null) return node.left;
+
+            // Case 3: Two children (Find In-Order Successor)
+            Book successor = node.right;
+            while (successor.left != null) {
+                successor = successor.left;
+            }
+
+            // Copy successor data into current node
+            node.setIsbn(successor.getIsbn());
+            node.setTitle(successor.getTitle());
+            node.setAuthor(successor.getAuthor());
+
+            // Delete the successor
+            node.right = deleteNode(node.right, successor.getIsbn());
+        }
+        return node;
+    }
 }
