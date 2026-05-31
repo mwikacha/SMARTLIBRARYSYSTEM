@@ -7,4 +7,6 @@ public interface LibraryADT {
     void borrowBook(int isbn);
 
     void displayLatestHistory();
+
+    void returnBook(int isbn, int lateDays);
 }

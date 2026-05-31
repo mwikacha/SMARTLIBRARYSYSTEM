@@ -18,7 +18,7 @@ public class Menu {
             if (sc.hasNextInt()) {
                 int choice = sc.nextInt();
 
-                if (choice == 5) {
+                if (choice == 6) {
                     keepRunning = false;
                     System.out.println("Exiting Smart Library System. Goodbye!");
                 } else {
@@ -41,7 +41,8 @@ public class Menu {
         System.out.println("[2] Search Book (BST)");
         System.out.println("[3] Borrow Book (Stack)");
         System.out.println("[4] History");
-        System.out.println("[5] Exit");
+        System.out.println("[5] Return Book");
+        System.out.println("[6] Exit");
         System.out.println("--------------------------");
     }
 
@@ -94,7 +95,21 @@ public class Menu {
                 System.out.println("Displaying History ......");
                 library.displayLatestHistory();
                 break;
-        
+
+            case 5:
+                System.out.print("Enter ISBN to return: ");
+                if (sc.hasNextInt()) {
+                    int returnIsbn = sc.nextInt();
+                    System.out.print("Enter number of late days: ");
+                    if (sc.hasNextInt()) {
+                        int lateDays = sc.nextInt();
+                        library.returnBook(returnIsbn, lateDays);
+                    } else {
+                        sc.next(); // Clear invalid input
+                        System.out.println("Error: Late days must be a valid integer!");
+                    }
+                }  
+                break;      
             default:
                 System.out.println("Invalid Option!");
         }
