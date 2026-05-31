@@ -54,7 +54,7 @@ Books are stored in a database (BST) for fast searching by ISBN. When a student 
 | Feature | Description |
 | --- | --- |
 | Return Book | |
-| Fine Management |  |
+| Fine Management | The Fine Management feature is to calculate penalties for overdue book returns. When a user returns a book, the system requests the ISBN and the number of late days.<br>The system then searches for the book in the BST catalogue and calculates the fine using the calculateFine() method in the `Book` class.<br>The fine calculation is based on a simple rule where each late day is charged RM1.00. If the book is returned on time or before the due date, no fine is charged. After calculation, the system displays the fine amount to the user.<br>This feature was implemented using methods and conditional statements without requiring an additional data structure. The calculation is performed immediately during the return process and the result is displayed directly in the console.|
 | Wishlist (Queue) | |
 
 ---
@@ -85,12 +85,17 @@ SMARTLIBRARYSYSTEM/
 
 | NO | NAME | CONTRIBUTIONS | DESCRIPTION |
 | :---: | --- | :---: | --- |
-| 1 | ARISHA BINTI MOHAMAD | ADT Designer & Book Entity | Create the Interface for the Library System to ensure "Information Hiding."<br>Design the core Book entity class to encapsulate book details. |
+| 1 | ARISHA BINTI MOHAMAD | ADT Designer & Book Entity<br>Fine Management | Create the Interface for the Library System to ensure "Information Hiding."<br>Design the core Book entity class to encapsulate book details. |
 | 2 | CHUA JEE HENG | Catalogue Architect & Record Finder | Build a BST to store book titles and authors indexed by ISBN.<br>Implement a recursive Search function within the BST to find books by ISBN. |
 | 3 | LAW XIN WEY | Borrowing History | Implement a Stack to keep track of books checked out (Most recent on top). |
-| 4 | KEERTTI A/P RASANRAN | Smart Library Manager | Handle the central administrative logic, including the borrowing and returning process by coordinating the search from the catalogue etc. |
-| 5 | HAN NING | Functional Console Interface | Deliver a Console Interface that allows a user (Librarian or Student) to interact with the system without modifying the source code. |
+| 4 | KEERTTI A/P RASANRAN | Smart Library Manager<br>Return Book | Handle the central administrative logic, including the borrowing and returning process by coordinating the search from the catalogue etc. |
+| 5 | HAN NING | Functional Console Interface | Deliver a smooth Console Interface that allows a user to interact with the system without modifying the source code. |
 
 ---
 
 ## 8.0 Challenges Faced
+
+1. One of the main challenges faced during the development process was integrating multiple data structures such as Binary Search Tree (BST), Stack, and ADT Interface into one complete system. The group needed to ensure that all components could work together smoothly without affecting each other’s functionality.
+2. Implementing the BST for book searching was challenging because recursive insertion and searching methods were required. Proper handling of the left and right nodes was important to ensure books were stored and retrieved correctly based on ISBN values.
+
+---
