@@ -26,5 +26,10 @@ public class BorrowHistory {
                 }
             }
         }
+    
+         // Getter so SmartLibrary can search and remove from the stack
+        public Stack<Book> getStack() {
+             return borrowHistory;
+        }
     }
 

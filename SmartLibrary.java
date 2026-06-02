@@ -157,9 +157,59 @@ public class SmartLibrary implements LibraryADT {
         history.viewHistory(); // Delegates entirely to the BorrowHistory class
     }
 
-    @Override
-    public void returnBook(int isbn, int lateDays) {
-         double fine = book.calculateFine(lateDays);
-        
+    // ===========================================================
+// METHOD 5: returnBook()
+// Called by: Menu (case 5)
+// Steps:
+//   1. Search the BorrowHistory stack for the book by ISBN
+//   2. If found, calculate late fine using Book.calculateFine()
+//   3. Remove it from the history stack
+//   4. Re-insert the book back into the BST catalogue
+//   5. Display fine summary and success message
+// ===========================================================
+
+@Override
+public void returnBook(int isbn, int lateDays) {
+
+    // Step 1: Search the borrow history stack for the book by ISBN
+    Book toReturn = null;
+
+    for (int i = 0; i < history.getStack().size(); i++) {
+        if (history.getStack().get(i).getIsbn() == isbn) {
+            toReturn = history.getStack().get(i);
+            break;
+        }
     }
+
+    // Step 2: If the book was not found in borrow history
+    if (toReturn == null) {
+        System.out.println("Return failed: ISBN " + isbn + " was not found in borrow history.");
+        System.out.println("This book may not have been borrowed, or ISBN is incorrect.");
+        return;
+    }
+
+    // Step 3: Calculate the fine using Book's built-in method
+    double fine = toReturn.calculateFine(lateDays);
+
+    // Step 4: Remove the book from the history stack
+    history.getStack().remove(toReturn);
+
+    // Step 5: Re-insert the book back into both BSTs (catalogue + mirror)
+    catalogue.insert(toReturn.getIsbn(), toReturn.getTitle(), toReturn.getAuthor());
+    bstRoot = mirrorInsert(bstRoot, toReturn.getIsbn(), toReturn.getTitle(), toReturn.getAuthor());
+
+    // Step 6: Display result
+    System.out.println("\n--- Return Book Summary ---");
+    System.out.println("Returned: \"" + toReturn.getTitle() + "\" by " + toReturn.getAuthor());
+    System.out.println("ISBN: " + toReturn.getIsbn());
+
+    if (lateDays <= 0) {
+        System.out.println("Returned on time. No fine charged.");
+    } else {
+        System.out.printf("Late by %d day(s). Fine charged: RM%.2f%n", lateDays, fine);
+    }
+
+    System.out.println("Book has been returned to the catalogue successfully.");
+  }
+
 }
