@@ -18,52 +18,48 @@ public class Menu {
             if (sc.hasNextInt()) {
                 int choice = sc.nextInt();
 
-                if (choice == 6) {
+                if (choice == 7) { // Changed exit option to 7
                     keepRunning = false;
                     System.out.println("Exiting Smart Library System. Goodbye!");
                 } else {
                     choices(choice, sc); 
                 }
             } else {
-                String invalid = sc.next(); // Clear the invalid text
-                System.out.println("Invalid input! '" + invalid + "' is not a number. Please enter 1-5.");
+                String invalid = sc.next(); 
+                System.out.println("Invalid input! '" + invalid + "' is not a number. Please enter 1-7.");
             }
         }
-        
         sc.close(); 
     }
 
     private void printMenu() {
         System.out.println("\n--------------------------");
-        System.out.println("    Smart Library Menu"); // 4 Spaces
+        System.out.println("    Smart Library Menu"); 
         System.out.println("--------------------------");
         System.out.println("[1] Add Book");
         System.out.println("[2] Search Book (BST)");
-        System.out.println("[3] Borrow Book (Stack)");
+        System.out.println("[3] Borrow / Join Waitlist"); // Adjusted label
         System.out.println("[4] History");
         System.out.println("[5] Return Book");
-        System.out.println("[6] Exit");
+        System.out.println("[6] View Book Waitlist (Queue)"); // NEW option
+        System.out.println("[7] Exit");
         System.out.println("--------------------------");
     }
 
     private void choices(int choice, Scanner sc) {
-
         switch (choice) {
             case 1:
                 System.out.print("Enter ISBN: ");
                 if (sc.hasNextInt()) {
                     int isbn = sc.nextInt();
                     sc.nextLine(); 
-
                     System.out.print("Enter Title: ");
                     String title = sc.nextLine();
-
                     System.out.print("Enter Author: ");
                     String author = sc.nextLine();
-
                     library.addBook(isbn, title, author);
                 } else {
-                    sc.next(); // Clear invalid input
+                    sc.next();
                     System.out.println("Error: ISBN must be a valid integer!");
                 }
                 break;
@@ -72,21 +68,24 @@ public class Menu {
                 System.out.print("Enter ISBN to search: ");
                 if (sc.hasNextInt()) {
                     int searchIsbn = sc.nextInt();
-                    System.out.println("Searching for " + searchIsbn + " ......");
                     library.searchBook(searchIsbn);
                 } else {
-                    sc.next(); // Clear invalid input
+                    sc.next();
                     System.out.println("Error: ISBN must be a valid integer!");
                 }
                 break;
 
-            case 3:
+            case 3: // UPDATED: Collects student name
                 System.out.print("Enter ISBN to borrow: ");
                 if (sc.hasNextInt()) {
                     int borrowIsbn = sc.nextInt();
-                    library.borrowBook(borrowIsbn);
+                    sc.nextLine(); // Clear scanner buffer
+                    System.out.print("Enter Student Name: ");
+                    String name = sc.nextLine();
+                    
+                    library.borrowBook(borrowIsbn, name);
                 } else {
-                    sc.next(); // Clear invalid input
+                    sc.next();
                     System.out.println("Error: ISBN must be a valid integer!");
                 }
                 break;
@@ -105,14 +104,25 @@ public class Menu {
                         int lateDays = sc.nextInt();
                         library.returnBook(returnIsbn, lateDays);
                     } else {
-                        sc.next(); // Clear invalid input
+                        sc.next();
                         System.out.println("Error: Late days must be a valid integer!");
                     }
                 }  
                 break;      
+                
+            case 6: // NEW: Option execution to check waitlists
+                System.out.print("Enter Book ISBN to view waitlist: ");
+                if (sc.hasNextInt()) {
+                    int queueIsbn = sc.nextInt();
+                    library.viewWaitlist(queueIsbn);
+                } else {
+                    sc.next();
+                    System.out.println("Error: ISBN must be an integer.");
+                }
+                break;
+
             default:
                 System.out.println("Invalid Option!");
         }
     }
-
 }
