@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Book {
     private int isbn;
     private String title;
@@ -5,6 +8,8 @@ public class Book {
     private double fine;
     // BST Pointers
     Book left, right;
+    
+    private Queue<String> waitlist = new LinkedList<>();
 
     public Book(int isbn, String title, String author) {
         this.isbn = isbn;
@@ -22,6 +27,23 @@ public class Book {
     public void setIsbn(int isbn) { this.isbn = isbn; }
     public void setTitle(String title) { this.title = title; }
     public void setAuthor(String author) { this.author = author; }
+
+    // NEW: Waitlist Helper Methods
+    public void addToWaitlist(String studentName) {
+        waitlist.add(studentName);
+    }
+
+    public String getNextInWaitlist() {
+        return waitlist.poll(); // Removes and returns the front of the queue
+    }
+
+    public boolean hasWaitlist() {
+        return !waitlist.isEmpty();
+    }
+
+    public Queue<String> getWaitlist() {
+        return waitlist;
+    }
 
     @Override
     public String toString() {
