@@ -48,7 +48,7 @@ public class Menu {
 
     private void choices(int choice, Scanner sc) {
         switch (choice) {
-            case 1:
+            case 1:                  
                 System.out.print("Enter ISBN: ");
                 if (sc.hasNextInt()) {
                     int isbn = sc.nextInt();
