@@ -6,22 +6,52 @@ public class SmartLibrary implements LibraryADT {
     // The BorrowHistory stack records currently checked out books
     private BorrowHistory history = new BorrowHistory();
 
-    @Override
-    public void addBook(int isbn, String title, String author) {
-        // Insert directly into the official BST catalogue
-        catalogue.insert(isbn, title, author);
-        System.out.println("Book added: \"" + title + "\" (ISBN: " + isbn + ")");
+
+    public boolean isBookBorrowed(int isbn) {
+        return history.isBorrowed(isbn);
     }
 
     @Override
-    public void searchBook(int isbn) {
-        Book found = catalogue.search(isbn);
-        if (found != null) {
-            System.out.println("Book Found: " + found);
+    public void addBook(int isbn, String title, String author) {
+        // Check the catalogue
+        Book toAdd = catalogue.search(isbn);
+        
+        if (toAdd != null) {
+            // Book exist in the catalogue
+            System.out.println("Cannot Add: Book with ISBN " + isbn + " already exists in the catalogue!");
+            
+        } else if (isBookBorrowed(isbn)) {
+            // THE INTERCEPT: It is not on the shelf, but currently being borrowed
+            System.out.println("Cannot Add: Book with ISBN " + isbn + " already exists (Currently being borrowed).");
+            
         } else {
-            System.out.println("Book not found. ISBN " + isbn + " does not exist in the catalogue.");
+            // It is not on the shelf && not borrowed
+            catalogue.insert(isbn, title, author);
+            System.out.println("Book added: \"" + title + "\" (ISBN: " + isbn + ")");
         }
     }
+
+
+    @Override
+    public void searchBook(int isbn) {
+        // Use the teammate's BST search method
+        Book found = catalogue.search(isbn);
+
+        if (found != null) {
+            // Book exists in the catalogue
+            System.out.println("Book Found: " + found + " | [STATUS]: Available"); // calls Book.toString()
+        } else {
+            Book borrowedBook = history.getBorrowedBook(isbn);
+
+            if(isBookBorrowed(isbn)) {
+                System.out.println("Book Found: " + borrowedBook + " | [STATUS]: Being Borrowed"); // calls Book.toString()
+            } else {
+                // Book not in BST
+            System.out.println("Book not found. ISBN " + isbn + " does not exist in the catalogue.");
+            }
+        }
+    }
+
 
     @Override
     public void borrowBook(int isbn, String studentName) {
@@ -56,10 +86,9 @@ public class SmartLibrary implements LibraryADT {
             if (borrowedCopy != null) {
                 // Book is actively out. Enqueue student to its waitlist!
                 borrowedCopy.addToWaitlist(studentName);
-                System.out.println("Notice: \"" + borrowedCopy.getTitle() + "\" is currently checked out.");
                 System.out.println("--> Success: " + studentName + " has been added to the WAITLIST (Queue position: " + borrowedCopy.getWaitlist().size() + ").");
             } else {
-                System.out.println("Cannot borrow/queue: ISBN " + isbn + " does not exist in this library system.");
+                System.out.println("Cannot borrow: Book with ISBN " + isbn + " does not exist in the catalogue.");
             }
         }
     }
@@ -92,7 +121,9 @@ public class SmartLibrary implements LibraryADT {
         // Check the waitlist queue
         if (toReturn.hasWaitlist()) {
             String nextStudent = toReturn.getNextInWaitlist();
-            System.out.println("⚠️ Waitlist Alert! Automatically checking out book to next student: " + nextStudent);
+            System.out.println();
+            System.out.println("[!] Waitlist Alert! " + nextStudent + " is on the waitlist for this book!");
+            System.out.println("Automatically checking out book to next student: " + nextStudent);
             
             // Re-route straight back into active checkout history for the next student
             history.getStack().push(toReturn); 

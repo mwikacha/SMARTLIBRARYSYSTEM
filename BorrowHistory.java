@@ -18,7 +18,7 @@ public class BorrowHistory {
                 System.out.println("No borrowing history found.");
             } else {
                 System.out.println("\n--- Borrowing History ---");
-                //LIFO order
+                // LIFO order
                 for (int i = borrowHistory.size() - 1; i >= 0; i--) {
                     Book b = borrowHistory.get(i);
                     System.out.printf("[%d] ISBN: %-5d | Title: %-15s | Author: %-15s%n",
@@ -26,8 +26,26 @@ public class BorrowHistory {
                 }
             }
         }
+
+        public boolean isBorrowed(int isbn) {
+            for (Book b : borrowHistory) {
+                if (b.getIsbn() == isbn) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Book getBorrowedBook(int isbn) {
+            for (Book b : borrowHistory) {
+                if (b.getIsbn() == isbn) {
+                    return b; // Found it! Return a copy of the data.
+                }
+            }
+            return null;
+        }
     
-         // Getter so SmartLibrary can search and remove from the stack
+        // Getter so SmartLibrary can search and remove from the stack
         public Stack<Book> getStack() {
              return borrowHistory;
         }
