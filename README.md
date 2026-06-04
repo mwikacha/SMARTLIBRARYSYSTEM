@@ -81,7 +81,14 @@ SMARTLIBRARYSYSTEM/
 
 ## 6.0 Console Output Program
 
-
+|Feature|Screenshot|
+|---|---|
+|Add Book|<img width="371" height="354" alt="Screenshot 2026-06-04 184037" src="https://github.com/user-attachments/assets/95fa0b04-e358-42d0-ad5a-d82cc141b23a" />|
+|Search Book|<img width="811" height="312" alt="Screenshot 2026-06-04 184130" src="https://github.com/user-attachments/assets/416040c4-8ff4-4a53-b4ce-a0da9ad55380" />|
+|Borrow Book|1. Available <br> <img width="517" height="401" alt="Screenshot 2026-06-04 184202" src="https://github.com/user-attachments/assets/babebcea-3d44-4a81-9b8c-fbc08130ec21" /> <br>2. Checked Out <br><img width="645" height="400" alt="Screenshot 2026-06-04 184334" src="https://github.com/user-attachments/assets/2b7b3319-70e0-4156-a0e2-934081139742" />|
+|Borrow History|<img width="574" height="356" alt="Screenshot 2026-06-04 184224" src="https://github.com/user-attachments/assets/bc9f2639-8c44-4545-a773-ca856a2f542d" />|
+|Return Book|1. Fine Management<br>2. Automatically Assigned<br> <img width="545" height="464" alt="Screenshot 2026-06-04 184442" src="https://github.com/user-attachments/assets/aca2ebe9-4be0-463d-b150-95cb055ff424" />|
+|Waitlist (Queue)|<img width="392" height="355" alt="Screenshot 2026-06-04 184404" src="https://github.com/user-attachments/assets/62d42ab4-37ba-4f30-813e-f5c81f448882" />|
 
 ## 7.0 Contribution
 
@@ -89,7 +96,7 @@ SMARTLIBRARYSYSTEM/
 | :---: | --- | :---: | --- |
 | 1 | ARISHA BINTI MOHAMAD | - ADT Designer & Book Entity<br>- Fine Management | - Create the Interface for the Library System to ensure "Information Hiding."<br>- Design the core Book entity class to encapsulate book details.<br>- Implement the Fine Management feature to calculate overdue penalties during the book return process. |
 | 2 | CHUA JEE HENG | - Catalogue Architect & Record Finder<br>- Waitlist Queue | - Build a BST to store book titles and authors indexed by ISBN.<br>- Implement a recursive Search function within the BST to find books by ISBN.<br>- Implement the Waitlist Management feature to queue students for unavailable books and handle automatic reassignments during the book return process.|
-| 3 | LAW XIN WEY | - Borrowing History | - Implement a Stack to keep track of books checked out (Most recent on top). |
+| 3 | LAW XIN WEY | - Borrowing History <br> - Refine Add Book| - Implement a Stack to keep track of books checked out (Most recent on top).<br> - Implement the Dual-Validation Add Book feature to prevent ISBN duplication by cross-referencing both the active catalogue and the checkout logs.|
 | 4 | KEERTTI A/P RASANRAN | - Smart Library Manager<br>- Return Book | - Handle the central administrative logic, including the borrowing and returning process by coordinating the search from the catalogue etc.<br> - Implemented the Return Book feature that enables users to return borrowed books using their ISBN.<br>- Integrated the borrowing history and BST catalogue to support the complete book return process. |
 | 5 | HAN NING | - Functional Console Interface<br> - Remove Book (True Deletion) | - Deliver a smooth Console Interface that allows a user to interact with the system without modifying the source code.<br> - Implement the Dynamic Catalogue feature to safely extract and delete book nodes from the active database during the borrowing process. |
 
