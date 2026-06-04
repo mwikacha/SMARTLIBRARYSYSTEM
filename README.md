@@ -6,14 +6,16 @@
 ---
 
 ## Table of Contents
-- [Team Members](#10-team-members)
-- [Project Overview](#20-project-overview)
-- [Features](#30-features)
-- [Additional Features](#40-additional-features)
-- [Project Structure](#50-project-structure)
-- [Screenshot](#60-screenshot)
-- [Contribution](#70-contribution)
-- [Challenges Faced](#80-challenges-faced)
+- [📓 Smart Library System](#-smart-library-system)
+	- [Table of Contents](#table-of-contents)
+	- [1.0 Team Members](#10-team-members)
+	- [2.0 Project Overview](#20-project-overview)
+	- [3.0 Features](#30-features)
+	- [4.0 Additional Features](#40-additional-features)
+	- [5.0 Project Structure](#50-project-structure)
+	- [6.0 Console Output Program](#60-console-output-program)
+	- [7.0 Contribution](#70-contribution)
+	- [8.0 Challenges Faced](#80-challenges-faced)
 
 --- 
 
@@ -77,7 +79,7 @@ SMARTLIBRARYSYSTEM/
 
 ---
 
-## 6.0 Screenshot
+## 6.0 Console Output Program
 
 
 
@@ -85,11 +87,11 @@ SMARTLIBRARYSYSTEM/
 
 | NO | NAME | CONTRIBUTIONS | DESCRIPTION |
 | :---: | --- | :---: | --- |
-| 1 | ARISHA BINTI MOHAMAD | - ADT Designer & Book Entity<br>- Fine Management | Create the Interface for the Library System to ensure "Information Hiding."<br>Design the core Book entity class to encapsulate book details.<br>Implement the Fine Management feature to calculate overdue penalties during the book return process. |
-| 2 | CHUA JEE HENG | - Catalogue Architect & Record Finder | Build a BST to store book titles and authors indexed by ISBN.<br>Implement a recursive Search function within the BST to find books by ISBN. |
-| 3 | LAW XIN WEY | - Borrowing History | Implement a Stack to keep track of books checked out (Most recent on top). |
-| 4 | KEERTTI A/P RASANRAN | - Smart Library Manager<br>- Return Book | Handle the central administrative logic, including the borrowing and returning process by coordinating the search from the catalogue etc. |
-| 5 | HAN NING | - Functional Console Interface | Deliver a smooth Console Interface that allows a user to interact with the system without modifying the source code. |
+| 1 | ARISHA BINTI MOHAMAD | - ADT Designer & Book Entity<br>- Fine Management | - Create the Interface for the Library System to ensure "Information Hiding."<br>- Design the core Book entity class to encapsulate book details.<br>- Implement the Fine Management feature to calculate overdue penalties during the book return process. |
+| 2 | CHUA JEE HENG | - Catalogue Architect & Record Finder<br>- Waitlist Queue | - Build a BST to store book titles and authors indexed by ISBN.<br>- Implement a recursive Search function within the BST to find books by ISBN.<br>- Implement the Waitlist Management feature to queue students for unavailable books and handle automatic reassignments during the book return process.|
+| 3 | LAW XIN WEY | - Borrowing History | - Implement a Stack to keep track of books checked out (Most recent on top). |
+| 4 | KEERTTI A/P RASANRAN | - Smart Library Manager<br>- Return Book | - Handle the central administrative logic, including the borrowing and returning process by coordinating the search from the catalogue etc.<br> - Implemented the Return Book feature that enables users to return borrowed books using their ISBN.<br>- Integrated the borrowing history and BST catalogue to support the complete book return process. |
+| 5 | HAN NING | - Functional Console Interface<br> - Remove Book (True Deletion) | - Deliver a smooth Console Interface that allows a user to interact with the system without modifying the source code.<br> - Implement the Dynamic Catalogue feature to safely extract and delete book nodes from the active database during the borrowing process. |
 
 ---
 

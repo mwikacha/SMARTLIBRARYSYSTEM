@@ -18,7 +18,7 @@ public class Menu {
             if (sc.hasNextInt()) {
                 int choice = sc.nextInt();
 
-                if (choice == 7) { // Changed exit option to 7
+                if (choice == 7) { 
                     keepRunning = false;
                     System.out.println("Exiting Smart Library System. Goodbye!");
                 } else {
@@ -34,11 +34,11 @@ public class Menu {
 
     private void printMenu() {
         System.out.println("\n--------------------------");
-        System.out.println("    Smart Library Menu"); 
+        System.out.println("    Smart Library Menu");       // 4 Space
         System.out.println("--------------------------");
         System.out.println("[1] Add Book");
         System.out.println("[2] Search Book (BST)");
-        System.out.println("[3] Borrow / Join Waitlist"); // Adjusted label
+        System.out.println("[3] Borrow / Join Waitlist (Stack)"); // Adjusted label
         System.out.println("[4] History");
         System.out.println("[5] Return Book");
         System.out.println("[6] View Book Waitlist (Queue)"); // NEW option
@@ -82,8 +82,22 @@ public class Menu {
                     sc.nextLine(); // Clear scanner buffer
                     System.out.print("Enter Student Name: ");
                     String name = sc.nextLine();
-                    
-                    library.borrowBook(borrowIsbn, name);
+                    System.out.println();
+
+                    if(library.isBookBorrowed(borrowIsbn)) {
+                        System.out.println("Cannot borrow: This book is currently checked out.");
+                        System.out.print("Do you want to join the waitlist? (Y/N): ");
+                        String answer = sc.nextLine();
+
+                        if (answer.equalsIgnoreCase("Y")) {
+                            library.borrowBook(borrowIsbn, name); 
+                        } else {
+                            System.out.println("Borrowing cancelled. Returning to menu.");
+                        }
+                    } else {
+                        library.borrowBook(borrowIsbn, name);
+                    }
+
                 } else {
                     sc.next();
                     System.out.println("Error: ISBN must be a valid integer!");
@@ -117,7 +131,7 @@ public class Menu {
                     library.viewWaitlist(queueIsbn);
                 } else {
                     sc.next();
-                    System.out.println("Error: ISBN must be an integer.");
+                    System.out.println("Error: ISBN must be an integer!");
                 }
                 break;
 

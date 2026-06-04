@@ -36,15 +36,6 @@ public class BorrowHistory {
             return false;
         }
 
-        public Book removeReturnedBook(int isbn) {
-            for (int i = 0; i < borrowHistory.size(); i++) {
-                if (borrowHistory.get(i).getIsbn() == isbn) {
-                    return borrowHistory.remove(i); // Remove from Borrow History
-                }
-            }
-            return null; 
-        }
-
         public Book getBorrowedBook(int isbn) {
             for (Book b : borrowHistory) {
                 if (b.getIsbn() == isbn) {
@@ -54,7 +45,7 @@ public class BorrowHistory {
             return null;
         }
     
-         // Getter so SmartLibrary can search and remove from the stack
+        // Getter so SmartLibrary can search and remove from the stack
         public Stack<Book> getStack() {
              return borrowHistory;
         }
