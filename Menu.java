@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public class Menu {
     private SmartLibrary library = new SmartLibrary();
 
