@@ -60,18 +60,17 @@ public class SmartLibrary implements LibraryADT {
 
         if (toBorrow != null) {
             // CASE A: Book is available in the catalogue!
-            
-            // Clear any lingering BST node pointers to isolate the object in the Stack
-            toBorrow.left = null;
-            toBorrow.right = null;
 
             // Push to the history stack
+            toBorrow.setBorrowInfo(studentName);
             history.push(toBorrow);
 
             // Use the teammate's built-in remove method to clear it from the active catalogue!
             catalogue.remove(isbn);
 
             System.out.println("Successfully borrowed: \"" + toBorrow.getTitle() + "\" by " + studentName);
+            System.out.println("Borrow Date: " + toBorrow.getBorrowDate());
+            System.out.println("Due Date   : " + toBorrow.getDueDate());
             System.out.println("This book has been removed from the available catalogue.");
         } else {
             // CASE B: Book is NOT in the catalogue. Check if it's currently borrowed.
@@ -84,11 +83,22 @@ public class SmartLibrary implements LibraryADT {
             }
 
             if (borrowedCopy != null) {
-                // Book is actively out. Enqueue student to its waitlist!
+
+                // Prevent current borrower from joining their own waitlist
+                if (studentName.equalsIgnoreCase(borrowedCopy.getBorrower())) {
+                    System.out.println("You are already borrowing this book.");
+                    return;
+                }
+
                 borrowedCopy.addToWaitlist(studentName);
-                System.out.println("--> Success: " + studentName + " has been added to the WAITLIST (Queue position: " + borrowedCopy.getWaitlist().size() + ").");
-            } else {
-                System.out.println("Cannot borrow: Book with ISBN " + isbn + " does not exist in the catalogue.");
+
+                System.out.println(
+                        "--> Success: "
+                                + studentName
+                                + " has been added to the WAITLIST (Queue position: "
+                                + borrowedCopy.getWaitlist().size()
+                                + ")."
+                );
             }
         }
     }
@@ -121,18 +131,27 @@ public class SmartLibrary implements LibraryADT {
         // Check the waitlist queue
         if (toReturn.hasWaitlist()) {
             String nextStudent = toReturn.getNextInWaitlist();
-            System.out.println();
-            System.out.println("[!] Waitlist Alert! " + nextStudent + " is on the waitlist for this book!");
-            System.out.println("Automatically checking out book to next student: " + nextStudent);
-            
-            // Re-route straight back into active checkout history for the next student
-            history.getStack().push(toReturn); 
+
+            System.out.println("[!] Waitlist Alert! " + nextStudent);
+
+            // update borrower properly
+            toReturn.setBorrowInfo(nextStudent);
+
+            // no need push again (already in history, just update record)
+            System.out.println("Book transferred to next student: " + nextStudent);
+
         } else {
-            // No one is waiting. Safely isolate pointers and return to the main BST catalogue
+
             toReturn.left = null;
             toReturn.right = null;
-            catalogue.insert(toReturn.getIsbn(), toReturn.getTitle(), toReturn.getAuthor());
-            System.out.println("Book has been returned to the available catalogue successfully.");
+
+            catalogue.insert(
+                    toReturn.getIsbn(),
+                    toReturn.getTitle(),
+                    toReturn.getAuthor()
+            );
+
+            System.out.println("Book returned to catalogue.");
         }
     }
 
@@ -161,5 +180,27 @@ public class SmartLibrary implements LibraryADT {
         } else {
             System.out.println("No active waitlist queue found for ISBN " + isbn);
         }
+    }
+    public void checkDueDateReminder() {
+        history.checkDueDateReminder();
+    }
+
+    public void joinWaitlist(int isbn, String studentName) {
+
+        Book b = history.getBorrowedBook(isbn);
+
+        if (b == null) {
+            System.out.println("Cannot join waitlist: Book is not currently borrowed.");
+            return;
+        }
+
+        if (studentName.equalsIgnoreCase(b.getBorrower())) {
+            System.out.println("You are already borrowing this book.");
+            return;
+        }
+
+        b.addToWaitlist(studentName);
+
+        System.out.println(studentName + " joined waitlist for: " + b.getTitle());
     }
 }

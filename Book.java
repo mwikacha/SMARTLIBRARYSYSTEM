@@ -1,11 +1,14 @@
 import java.util.LinkedList;
 import java.util.Queue;
-
+import java.time.LocalDate;
 public class Book {
     private int isbn;
     private String title;
     private String author;
     private double fine;
+    private LocalDate borrowDate;
+    private LocalDate dueDate;
+    private String borrower;
     // BST Pointers
     Book left, right;
     
@@ -23,14 +26,33 @@ public class Book {
     public String getTitle() { return title; }
     public String getAuthor() { return author; }
     public double getFine() {return fine;}
+    public LocalDate getBorrowDate() {
+        return borrowDate;
+    }
 
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public String getBorrower() {
+        return borrower;
+    }
     public void setIsbn(int isbn) { this.isbn = isbn; }
     public void setTitle(String title) { this.title = title; }
     public void setAuthor(String author) { this.author = author; }
-
+    public void setBorrowInfo(String borrower) {
+        this.borrower = borrower;
+        this.borrowDate = LocalDate.now();
+        this.dueDate = borrowDate.plusDays(14);
+    }
     // NEW: Waitlist Helper Methods
     public void addToWaitlist(String studentName) {
-        waitlist.add(studentName);
+
+        if (!waitlist.contains(studentName)) {
+            waitlist.add(studentName);
+        } else {
+            System.out.println(studentName + " is already in the waitlist.");
+        }
     }
 
     public String getNextInWaitlist() {
