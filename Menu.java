@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public class Menu {
     private SmartLibrary library = new SmartLibrary();
 
@@ -18,7 +17,7 @@ public class Menu {
             if (sc.hasNextInt()) {
                 int choice = sc.nextInt();
 
-                if (choice == 7) { 
+                if (choice == 8) {
                     keepRunning = false;
                     System.out.println("Exiting Smart Library System. Goodbye!");
                 } else {
@@ -42,7 +41,8 @@ public class Menu {
         System.out.println("[4] History");
         System.out.println("[5] Return Book");
         System.out.println("[6] View Book Waitlist (Queue)"); // NEW option
-        System.out.println("[7] Exit");
+        System.out.println("[7] Due Date Reminder");
+        System.out.println("[8] Exit");
         System.out.println("--------------------------");
     }
 
@@ -75,25 +75,28 @@ public class Menu {
                 }
                 break;
 
-            case 3: // UPDATED: Collects student name
+            case 3:
                 System.out.print("Enter ISBN to borrow: ");
+
                 if (sc.hasNextInt()) {
                     int borrowIsbn = sc.nextInt();
-                    sc.nextLine(); // Clear scanner buffer
+                    sc.nextLine();
+
                     System.out.print("Enter Student Name: ");
                     String name = sc.nextLine();
-                    System.out.println();
 
-                    if(library.isBookBorrowed(borrowIsbn)) {
-                        System.out.println("Cannot borrow: This book is currently checked out.");
-                        System.out.print("Do you want to join the waitlist? (Y/N): ");
+                    if (library.isBookBorrowed(borrowIsbn)) {
+
+                        System.out.println("Book is currently borrowed.");
+                        System.out.print("Join waitlist? (Y/N): ");
                         String answer = sc.nextLine();
 
                         if (answer.equalsIgnoreCase("Y")) {
-                            library.borrowBook(borrowIsbn, name); 
+                            library.joinWaitlist(borrowIsbn, name);
                         } else {
-                            System.out.println("Borrowing cancelled. Returning to menu.");
+                            System.out.println("Cancelled.");
                         }
+
                     } else {
                         library.borrowBook(borrowIsbn, name);
                     }
@@ -133,6 +136,10 @@ public class Menu {
                     sc.next();
                     System.out.println("Error: ISBN must be an integer!");
                 }
+                break;
+
+            case 7:
+                library.checkDueDateReminder();
                 break;
 
             default:
