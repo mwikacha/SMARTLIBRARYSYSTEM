@@ -23,7 +23,7 @@ public class SmartLibrary implements LibraryADT {
         }
 
         catalogue.insert(isbn, title, author);
-        System.out.println("Book added: " + title);
+        System.out.println("\nBook added: \"" + title + "\" (ISBN: " + isbn + ")");
     }
 
     @Override
@@ -32,16 +32,16 @@ public class SmartLibrary implements LibraryADT {
         Book found = catalogue.search(isbn);
 
         if (found != null) {
-            System.out.println("Book Found: " + found + " | Available");
+            System.out.println("\nBook Found: " + found + " | [Status] : Available");
             return;
         }
 
         Book borrowed = history.getBorrowedBook(isbn);
 
         if (borrowed != null) {
-            System.out.println("Book Found: " + borrowed + " | Being Borrowed");
+            System.out.println("\nBook Found: " + borrowed + " | [Status] : Being Borrowed");
         } else {
-            System.out.println("Book not found.");
+            System.out.println("\nBook not found.");
         }
     }
 
@@ -59,14 +59,15 @@ public class SmartLibrary implements LibraryADT {
 
         history.push(book);
         catalogue.remove(isbn);
+        System.out.println("This book has been removed from the available catalogue.");
 
         // ✅ FIXED: proper due date popup
-        System.out.println("\n===== BORROW SUCCESS =====");
+        System.out.println("\n--- Borrowed Book Details ---");
         System.out.println("Book     : " + book.getTitle());
         System.out.println("Borrower : " + studentName);
         System.out.println("Borrow Date : " + book.getBorrowDate());
         System.out.println("Due Date    : " + book.getDueDate());
-        System.out.println("⚠ Return before due date to avoid fine!");
+        System.out.println("[!] Return before due date to avoid fine!");
     }
 
     @Override
@@ -90,13 +91,13 @@ public class SmartLibrary implements LibraryADT {
 
         double fine = book.calculateFine(lateDays);
 
-        System.out.println("\n--- Return Summary ---");
-        System.out.println("Book: " + book.getTitle());
+        System.out.println("\n--- Return Book Summary ---");
+        System.out.println("Returned: \"" + book.getTitle() + "\"");
 
         if (lateDays > 0) {
             System.out.printf("Late by %d days. Fine: RM%.2f%n", lateDays, fine);
         } else {
-            System.out.println("Returned on time.");
+            System.out.println("No fine charged. Thank you for returning on time. ");
         }
 
         stack.remove(book);
@@ -105,13 +106,13 @@ public class SmartLibrary implements LibraryADT {
 
             String next = book.getNextInWaitlist();
 
-            System.out.println("Waitlist activated: " + next);
+            System.out.println("\n[!] Wailist Alert: " + next + " is on the waitlist of this book");
 
             book.setBorrowInfo(next);
 
             history.push(book);
 
-            System.out.println("Transferred to: " + next);
+            System.out.println("Automatically checking out book to the next student: " + next);
 
         } else {
 
@@ -140,11 +141,11 @@ public class SmartLibrary implements LibraryADT {
             return;
         }
 
-        System.out.println("\nWaitlist for " + book.getTitle());
+        System.out.println("\n--- Waitlist Queue for \"" + book.getTitle() + "\" ---");
 
         int i = 1;
         for (String s : book.getWaitlist()) {
-            System.out.println(i++ + ". " + s);
+            System.out.println("[" + i++ + "] " + s);
         }
     }
 
@@ -168,6 +169,6 @@ public class SmartLibrary implements LibraryADT {
 
         book.addToWaitlist(studentName);
 
-        System.out.println(studentName + " added to waitlist.");
+        System.out.println("--> " + studentName + " has been added to waitlist. (Queue Position: " + book.getWaitlist().size() + ")");
     }
 }

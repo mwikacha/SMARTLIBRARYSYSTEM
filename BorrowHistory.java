@@ -1,6 +1,7 @@
 import java.util.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+
 public class BorrowHistory {
     private Stack<Book> borrowHistory = new Stack<>();
 
@@ -11,7 +12,7 @@ public class BorrowHistory {
             return;
         }
         borrowHistory.push(book);
-        System.out.println("\"" + book.getTitle() + "\" has been added to borrow history.");
+        System.out.println("\n\"" + book.getTitle() + "\" has been added to borrow history.");
     }
 
     // Display all borrowed books, newest first

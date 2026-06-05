@@ -25,10 +25,8 @@ public class Book {
     public int getIsbn() { return isbn; }
     public String getTitle() { return title; }
     public String getAuthor() { return author; }
-    public double getFine() {return fine;}
-    public LocalDate getBorrowDate() {
-        return borrowDate;
-    }
+    public double getFine() { return fine; }
+    public LocalDate getBorrowDate() { return borrowDate; }
 
     public LocalDate getDueDate() {
         return dueDate;
@@ -45,6 +43,7 @@ public class Book {
         this.borrowDate = LocalDate.now();
         this.dueDate = borrowDate.plusDays(14);
     }
+    
     // NEW: Waitlist Helper Methods
     public void addToWaitlist(String studentName) {
 

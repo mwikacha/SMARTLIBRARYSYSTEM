@@ -87,14 +87,14 @@ public class Menu {
 
                     if (library.isBookBorrowed(borrowIsbn)) {
 
-                        System.out.println("Book is currently borrowed.");
+                        System.out.println("\nCannot Borrowed: Book is currently checked out.");
                         System.out.print("Join waitlist? (Y/N): ");
                         String answer = sc.nextLine();
 
                         if (answer.equalsIgnoreCase("Y")) {
                             library.joinWaitlist(borrowIsbn, name);
                         } else {
-                            System.out.println("Cancelled.");
+                            System.out.println("Cancelled. Returning back to the menu...");
                         }
 
                     } else {
