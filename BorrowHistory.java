@@ -57,7 +57,7 @@ public class BorrowHistory {
 
         LocalDate today = LocalDate.now();
 
-        System.out.println("\n===== Due Date Reminder =====");
+        System.out.println("\n--- Due Date Reminder ---");
 
         boolean found = false;
 
@@ -81,7 +81,7 @@ public class BorrowHistory {
                 );
 
                 System.out.println(
-                        "Book    : " + b.getTitle()
+                        "Book    : \"" + b.getTitle() + "\""
                 );
 
                 System.out.println(
