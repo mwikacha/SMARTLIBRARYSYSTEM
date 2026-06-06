@@ -13,12 +13,12 @@ public class SmartLibrary implements LibraryADT {
     public void addBook(int isbn, String title, String author) {
 
         if (catalogue.search(isbn) != null) {
-            System.out.println("Cannot Add: Book already exists!");
+            System.out.println("\nCannot Add: Book already exists!");
             return;
         }
 
         if (isBookBorrowed(isbn)) {
-            System.out.println("Cannot Add: Book currently borrowed.");
+            System.out.println("\nCannot Add: Book already exists and currently borrowed.");
             return;
         }
 
@@ -51,7 +51,7 @@ public class SmartLibrary implements LibraryADT {
         Book book = catalogue.search(isbn);
 
         if (book == null) {
-            System.out.println("Book not available.");
+            System.out.println("\nCannot Borrow: Book does not exist in the catalogue.");
             return;
         }
 
@@ -85,7 +85,7 @@ public class SmartLibrary implements LibraryADT {
         }
 
         if (book == null) {
-            System.out.println("Return failed.");
+            System.out.println("\nReturn failed: Book does not exist in the catalogue.");
             return;
         }
 
