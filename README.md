@@ -84,12 +84,12 @@ SMARTLIBRARYSYSTEM/
 
 |Feature|Screenshot|
 |---|---|
-|Add Book|<img width="371" height="354" alt="Screenshot 2026-06-04 184037" src="https://github.com/user-attachments/assets/95fa0b04-e358-42d0-ad5a-d82cc141b23a" />|
-|Search Book|<img width="811" height="312" alt="Screenshot 2026-06-04 184130" src="https://github.com/user-attachments/assets/416040c4-8ff4-4a53-b4ce-a0da9ad55380" />|
-|Borrow Book|1. Available <br> <img width="517" height="401" alt="Screenshot 2026-06-04 184202" src="https://github.com/user-attachments/assets/babebcea-3d44-4a81-9b8c-fbc08130ec21" /> <br>2. Checked Out <br><img width="645" height="400" alt="Screenshot 2026-06-04 184334" src="https://github.com/user-attachments/assets/2b7b3319-70e0-4156-a0e2-934081139742" />|
-|Borrow History|<img width="574" height="356" alt="Screenshot 2026-06-04 184224" src="https://github.com/user-attachments/assets/bc9f2639-8c44-4545-a773-ca856a2f542d" />|
-|Return Book|1. Fine Management<br>2. Automatically Assigned<br> <img width="545" height="464" alt="Screenshot 2026-06-04 184442" src="https://github.com/user-attachments/assets/aca2ebe9-4be0-463d-b150-95cb055ff424" />|
-|Waitlist (Queue)|<img width="392" height="355" alt="Screenshot 2026-06-04 184404" src="https://github.com/user-attachments/assets/62d42ab4-37ba-4f30-813e-f5c81f448882" />|
+|Add Book|<img width="379" height="390" alt="Add" src="https://github.com/user-attachments/assets/ea2c040a-e5f2-4966-a417-ba4e2bf0ff37" />|
+|Search Book|<img width="814" height="353" alt="Search" src="https://github.com/user-attachments/assets/4b17fea9-6ba2-4dce-8929-b44936760b15" />|
+|Borrow Book|1. Available <br> <img width="514" height="556" alt="borrow" src="https://github.com/user-attachments/assets/af3433e7-8900-402d-aae6-cec4132fd67a" /><br>2. Checked Out <br><img width="519" height="420" alt="add to waitlist" src="https://github.com/user-attachments/assets/27326ed5-9c2d-4ae8-bfd8-792afd3ac937" />|
+|Borrow History|<img width="561" height="372" alt="borrow history" src="https://github.com/user-attachments/assets/12380c3a-f017-45e7-97dd-af9dc3ba1a75" />|
+|Return Book|1. Fine Management<br>2. Automatically Assigned<br> <img width="542" height="527" alt="return" src="https://github.com/user-attachments/assets/ff43e824-5ea1-42c0-92e4-77c1bc962c18" />|
+|Waitlist (Queue)|<img width="393" height="393" alt="waitlist queue" src="https://github.com/user-attachments/assets/d2d84dfb-7621-4146-acff-6d8bb1547d1b" />|
 
 ## 7.0 Contribution
 
