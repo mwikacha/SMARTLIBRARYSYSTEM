@@ -158,12 +158,12 @@ public class SmartLibrary implements LibraryADT {
         Book book = history.getBorrowedBook(isbn);
 
         if (book == null) {
-            System.out.println("Book not currently borrowed.");
+            System.out.println("\nBook not currently borrowed.");
             return;
         }
 
         if (studentName.equalsIgnoreCase(book.getBorrower())) {
-            System.out.println("You are already borrowing this book.");
+            System.out.println("--> You are already borrowing this book.");
             return;
         }
 
