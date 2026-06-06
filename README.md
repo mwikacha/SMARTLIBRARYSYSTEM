@@ -91,6 +91,8 @@ SMARTLIBRARYSYSTEM/
 |Return Book|1. Fine Management<br>2. Automatically Assigned<br> <img width="542" height="527" alt="return" src="https://github.com/user-attachments/assets/ff43e824-5ea1-42c0-92e4-77c1bc962c18" />|
 |Waitlist (Queue)|<img width="393" height="393" alt="waitlist queue" src="https://github.com/user-attachments/assets/d2d84dfb-7621-4146-acff-6d8bb1547d1b" />|
 
+---
+
 ## 7.0 Contribution
 
 | NO | NAME | CONTRIBUTIONS | DESCRIPTION |
