@@ -17,7 +17,7 @@ public class Menu {
             if (sc.hasNextInt()) {
                 int choice = sc.nextInt();
 
-                if (choice == 8) {
+                if (choice == 7) {
                     keepRunning = false;
                     System.out.println("Exiting Smart Library System. Goodbye!");
                 } else {
@@ -41,8 +41,7 @@ public class Menu {
         System.out.println("[4] History");
         System.out.println("[5] Return Book");
         System.out.println("[6] View Book Waitlist (Queue)"); // NEW option
-        System.out.println("[7] Due Date Reminder");
-        System.out.println("[8] Exit");
+        System.out.println("[7] Exit");
         System.out.println("--------------------------");
     }
 
@@ -136,10 +135,6 @@ public class Menu {
                     sc.next();
                     System.out.println("Error: ISBN must be an integer!");
                 }
-                break;
-
-            case 7:
-                library.checkDueDateReminder();
                 break;
 
             default:
