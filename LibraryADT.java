@@ -11,4 +11,6 @@ public interface LibraryADT {
     
     // Contract method to inspect a book's queue
     void viewWaitlist(int isbn);
+    void joinWaitlist(int isbn, String studentName);
+    void checkDueDateReminder();
 }
