@@ -1,14 +1,15 @@
+import java.io.PrintWriter;
+
 public class BookBST {
     private Book root;
 
-    // Public insert method
     public void insert(int isbn, String t, String a) {
         root = ins(root, isbn, t, a);
     }
 
-    // Private recursive insert helper
     private Book ins(Book r, int i, String t, String a) {
         if (r == null) return new Book(i, t, a);
+
         if (i < r.getIsbn()) {
             r.left = ins(r.left, i, t, a);
         } else if (i > r.getIsbn()) {
@@ -17,53 +18,57 @@ public class BookBST {
         return r;
     }
 
-    // Public search method
     public Book search(int i) {
         return sea(root, i);
     }
 
-    // Private recursive search helper
     private Book sea(Book r, int i) {
         if (r == null || r.getIsbn() == i) return r;
-        return (i < r.getIsbn()) ? sea(r.left, i) : sea(r.right, i);
+
+        return (i < r.getIsbn())
+                ? sea(r.left, i)
+                : sea(r.right, i);
     }
 
-    // Public delete method
     public void remove(int isbn) {
         root = deleteNode(root, isbn);
     }
 
-    // Private recursive delete helper
     private Book deleteNode(Book node, int isbn) {
-        if (node == null) {
-            return null; // Book not found
-        }
+        if (node == null) return null;
 
         if (isbn < node.getIsbn()) {
             node.left = deleteNode(node.left, isbn);
         } else if (isbn > node.getIsbn()) {
             node.right = deleteNode(node.right, isbn);
         } else {
-            // Found the node
-            
-            // Case 1 & 2: One child or no children
+
             if (node.left == null) return node.right;
             if (node.right == null) return node.left;
 
-            // Case 3: Two children (Find In-Order Successor)
             Book successor = node.right;
             while (successor.left != null) {
                 successor = successor.left;
             }
 
-            // Copy successor data into current node
             node.setIsbn(successor.getIsbn());
             node.setTitle(successor.getTitle());
             node.setAuthor(successor.getAuthor());
 
-            // Delete the successor
             node.right = deleteNode(node.right, successor.getIsbn());
         }
         return node;
+    }
+
+    public Book getRoot() {
+        return root;
+    }
+
+    public void inorderToCSV(Book node, PrintWriter pw) {
+        if (node == null) return;
+
+        inorderToCSV(node.left, pw);
+        pw.println(node.getIsbn() + "," + node.getTitle() + "," + node.getAuthor());
+        inorderToCSV(node.right, pw);
     }
 }
