@@ -2,6 +2,7 @@ import java.util.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+
 public class BorrowHistory {
     private Stack<Book> borrowHistory = new Stack<>();
 
@@ -19,31 +20,32 @@ public class BorrowHistory {
     public void viewHistory() {
         if (borrowHistory.isEmpty()) {
             System.out.println("No borrowing history found.");
-        } else {
-            System.out.println("\n--- Borrowing History ---");
-            // LIFO order
-            for (int i = borrowHistory.size() - 1; i >= 0; i--) {
-                Book b = borrowHistory.get(i);
-                System.out.printf("[%d] ISBN: %-5d | Title: %-15s | Author: %-15s%n",
-                        (borrowHistory.size() - i), b.getIsbn(), b.getTitle(), b.getAuthor());
-            }
+            return;
+        }
+
+        System.out.println("\n--- Borrow History ---");
+
+        // LIFO order
+        for (int i = borrowHistory.size() - 1; i >= 0; i--) {
+            Book b = borrowHistory.get(i);
+            System.out.printf("[%d] %d | %s | %s%n",
+                    borrowHistory.size() - i,
+                    b.getIsbn(),
+                    b.getTitle(),
+                    b.getAuthor());
         }
     }
 
     public boolean isBorrowed(int isbn) {
         for (Book b : borrowHistory) {
-            if (b.getIsbn() == isbn) {
-                return true;
-            }
+            if (b.getIsbn() == isbn) return true;
         }
         return false;
     }
 
     public Book getBorrowedBook(int isbn) {
         for (Book b : borrowHistory) {
-            if (b.getIsbn() == isbn) {
-                return b; // Found it! Return a copy of the data.
-            }
+            if (b.getIsbn() == isbn) return b;
         }
         return null;
     }
@@ -56,56 +58,26 @@ public class BorrowHistory {
     public void checkDueDateReminder() {
 
         LocalDate today = LocalDate.now();
+        boolean found = false;
 
         System.out.println("\n--- Due Date Reminder ---");
 
-        boolean found = false;
-
         for (Book b : borrowHistory) {
 
-            if (b.getDueDate() == null)
-                continue;
+            if (b.getDueDate() == null) continue;
 
-            long daysLeft =
-                    ChronoUnit.DAYS.between(
-                            today,
-                            b.getDueDate()
-                    );
+            long daysLeft = ChronoUnit.DAYS.between(today, b.getDueDate());
 
-            if (daysLeft <= 3 && daysLeft >= 0) {
-
+            if (daysLeft <= 3) {
                 found = true;
+                System.out.println("Student: " + b.getBorrower());
+                System.out.println("Book   : " + b.getTitle());
 
-                System.out.println(
-                        "\nStudent : " + b.getBorrower()
-                );
-
-                System.out.println(
-                        "Book    : \"" + b.getTitle() + "\""
-                );
-
-                System.out.println(
-                        "Due in  : " + daysLeft + " day(s)"
-                );
-            }
-
-            if (daysLeft < 0) {
-
-                found = true;
-
-                System.out.println(
-                        "\nStudent : " + b.getBorrower()
-                );
-
-                System.out.println(
-                        "Book    : " + b.getTitle()
-                );
-
-                System.out.println(
-                        "OVERDUE : "
-                                + Math.abs(daysLeft)
-                                + " day(s)"
-                );
+                if (daysLeft >= 0) {
+                    System.out.println("Due in : " + daysLeft + " days");
+                } else {
+                    System.out.println("OVERDUE: " + Math.abs(daysLeft) + " days");
+                }
             }
         }
 

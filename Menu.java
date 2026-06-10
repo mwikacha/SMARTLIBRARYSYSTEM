@@ -9,7 +9,7 @@ public class Menu {
     public void runMenu() {
         Scanner sc = new Scanner(System.in);
         boolean keepRunning = true;
-
+        library.initSystem();
         while (keepRunning) {
             printMenu();
             System.out.print("Enter your choice: ");
@@ -36,11 +36,11 @@ public class Menu {
         System.out.println("    Smart Library Menu");       // 4 Space
         System.out.println("--------------------------");
         System.out.println("[1] Add Book");
-        System.out.println("[2] Search Book (BST)");
-        System.out.println("[3] Borrow / Join Waitlist (Stack)"); // Adjusted label
+        System.out.println("[2] Search Book ");
+        System.out.println("[3] Borrow / Join Waitlist"); // Adjusted label
         System.out.println("[4] History");
         System.out.println("[5] Return Book");
-        System.out.println("[6] View Book Waitlist (Queue)"); // NEW option
+        System.out.println("[6] View Book Waitlist"); // NEW option
         System.out.println("[7] Exit");
         System.out.println("--------------------------");
     }

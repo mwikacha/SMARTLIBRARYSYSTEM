@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.Stack;
 
 public class SmartLibrary implements LibraryADT {
@@ -5,8 +6,74 @@ public class SmartLibrary implements LibraryADT {
     private BookBST catalogue = new BookBST();
     private BorrowHistory history = new BorrowHistory();
 
-    public boolean isBookBorrowed(int isbn) {
-        return history.isBorrowed(isbn);
+    private static final String FILE_NAME = "books.csv";
+    private static final String BORROW_FILE = "borrow_history.csv";
+
+    public void loadFromCSV() {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+
+            String line;
+            boolean first = true;
+
+            while ((line = br.readLine()) != null) {
+
+                if (first) { first = false; continue; }
+
+                String[] data = line.split(",");
+
+                int isbn = Integer.parseInt(data[0]);
+                String title = data[1];
+                String author = data[2];
+
+                catalogue.insert(isbn, title, author);
+            }
+
+            System.out.println("CSV loaded.");
+
+        } catch (IOException e) {
+            System.out.println("No CSV found.");
+        }
+    }
+
+    public void saveToCSV() {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(FILE_NAME))) {
+
+            pw.println("isbn,title,author");
+            catalogue.inorderToCSV(catalogue.getRoot(), pw);
+
+        } catch (IOException e) {
+            System.out.println("Save error.");
+        }
+    }
+
+    public void initSystem() {
+        loadFromCSV();
+    }
+
+    private void saveBorrowRecord(Book book, String studentName) {
+
+        File file = new File(BORROW_FILE);
+
+        boolean fileExists = file.exists();
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) {
+
+            if (!fileExists) {
+                pw.println("ISBN,Title,Author,StudentName,BorrowDate,DueDate");
+            }
+
+            pw.println(
+                    book.getIsbn() + "," +
+                            book.getTitle() + "," +
+                            book.getAuthor() + "," +
+                            studentName + "," +
+                            book.getBorrowDate() + "," +
+                            book.getDueDate()
+            );
+
+        } catch (IOException e) {
+            System.out.println("Error writing borrow CSV.");
+        }
     }
 
     @Override
@@ -23,6 +90,8 @@ public class SmartLibrary implements LibraryADT {
         }
 
         catalogue.insert(isbn, title, author);
+        saveToCSV();
+
         System.out.println("\nBook added: \"" + title + "\" (ISBN: " + isbn + ")");
     }
 
@@ -58,8 +127,13 @@ public class SmartLibrary implements LibraryADT {
         book.setBorrowInfo(studentName);
 
         history.push(book);
+
         catalogue.remove(isbn);
         System.out.println("This book has been removed from the available catalogue.");
+
+        saveBorrowRecord(book, studentName); // ⭐ NEW CSV LOG
+
+        saveToCSV(); // inventory CSV
 
         // ✅ FIXED: proper due date popup
         System.out.println("\n--- Borrowed Book Details ---");
@@ -74,7 +148,6 @@ public class SmartLibrary implements LibraryADT {
     public void returnBook(int isbn, int lateDays) {
 
         Book book = null;
-
         Stack<Book> stack = history.getStack();
 
         for (Book b : stack) {
@@ -91,13 +164,18 @@ public class SmartLibrary implements LibraryADT {
 
         double fine = book.calculateFine(lateDays);
 
+        stack.remove(book);
+        catalogue.insert(book.getIsbn(), book.getTitle(), book.getAuthor());
+
+        saveToCSV();
+
         System.out.println("\n--- Return Book Summary ---");
         System.out.println("Returned: \"" + book.getTitle() + "\"");
 
         if (lateDays > 0) {
             System.out.printf("Late by %d days. Fine: RM%.2f%n", lateDays, fine);
         } else {
-            System.out.println("No fine charged. Thank you for returning on time. ");
+            System.out.println("Returned on time.");
         }
 
         stack.remove(book);
@@ -134,10 +212,10 @@ public class SmartLibrary implements LibraryADT {
     @Override
     public void viewWaitlist(int isbn) {
 
-        Book book = history.getBorrowedBook(isbn);
+        Book book = catalogue.search(isbn);
 
         if (book == null || !book.hasWaitlist()) {
-            System.out.println("No waitlist found.");
+            System.out.println("No waitlist.");
             return;
         }
 
@@ -149,13 +227,10 @@ public class SmartLibrary implements LibraryADT {
         }
     }
 
-    public void checkDueDateReminder() {
-        history.checkDueDateReminder();
-    }
-
+    @Override
     public void joinWaitlist(int isbn, String studentName) {
 
-        Book book = history.getBorrowedBook(isbn);
+        Book book = catalogue.search(isbn);
 
         if (book == null) {
             System.out.println("\nBook not currently borrowed.");
@@ -170,5 +245,14 @@ public class SmartLibrary implements LibraryADT {
         book.addToWaitlist(studentName);
 
         System.out.println("--> " + studentName + " has been added to waitlist. (Queue Position: " + book.getWaitlist().size() + ")");
+    }
+
+    @Override
+    public void checkDueDateReminder() {
+        history.checkDueDateReminder();
+    }
+
+    public boolean isBookBorrowed(int isbn) {
+        return history.isBorrowed(isbn);
     }
 }
