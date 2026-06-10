@@ -21,10 +21,14 @@ public class SmartLibrary implements LibraryADT {
 
                 String[] data = line.split(",");
 
-                try {
-                    int isbn = Integer.parseInt(data[0].trim());
-                    String title = data[1].trim();
-                    String author = data[2].trim();
+                if (data.length < 3) {
+                    System.out.println("Skipping incomplete line: " + line);
+                    continue;
+                }
+
+                int isbn = Integer.parseInt(data[0]);
+                String title = data[1];
+                String author = data[2];
 
                     // Failsafe for missing author text
                     if (author.isEmpty()) {
