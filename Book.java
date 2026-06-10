@@ -47,6 +47,12 @@ public class Book {
         this.borrowDate = LocalDate.now();
         this.dueDate = borrowDate.plusDays(14);
     }
+
+    public void setBorrowInfo(String studentName, String pastBorrowDate, String pastDueDate) {
+        this.borrower = studentName;
+        this.borrowDate = LocalDate.parse(pastBorrowDate);
+        this.dueDate = LocalDate.parse(pastDueDate);
+    }
     
     // NEW: Waitlist Helper Methods
     public void addToWaitlist(String studentName) {

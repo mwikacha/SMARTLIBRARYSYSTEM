@@ -9,7 +9,7 @@ public class BorrowHistory {
     // Called when student borrows a book
     public void push(Book book) {
         if (book == null) {
-            System.out.println("Error: Cannot add a null record to history.");
+            System.out.println("\nError: Cannot add a null record to history.");
             return;
         }
         borrowHistory.push(book);
@@ -19,7 +19,7 @@ public class BorrowHistory {
     // Display all borrowed books, newest first
     public void viewHistory() {
         if (borrowHistory.isEmpty()) {
-            System.out.println("No borrowing history found.");
+            System.out.println("\nNo borrowing history found.");
             return;
         }
 
@@ -82,7 +82,7 @@ public class BorrowHistory {
         }
 
         if (!found) {
-            System.out.println("No due date reminders.");
+            System.out.println("\nNo due date reminders.");
         }
     }
 }

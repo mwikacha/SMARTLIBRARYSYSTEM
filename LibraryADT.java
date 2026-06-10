@@ -1,6 +1,7 @@
 public interface LibraryADT {
 
     void addBook(int isbn, String title, String author);
+    void deleteBook(int isbn);
     void searchBook(int isbn);
 
     void borrowBook(int isbn, String studentName);
