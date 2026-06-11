@@ -8,7 +8,8 @@
 ## Table of Contents
 - [📓 Smart Library System](#-smart-library-system)
 	- [Table of Contents](#table-of-contents)
-	- [1.0 Team Members](#10-team-members)
+	- [Team Members](#team-members)
+ 	- [1.0 Problem Statement](#10-problem-statement)
 	- [2.0 Project Overview](#20-project-overview)
 	- [3.0 Features](#30-features)
 	- [4.0 Additional Features](#40-additional-features)
@@ -16,10 +17,11 @@
 	- [6.0 Console Output Program](#60-console-output-program)
 	- [7.0 Contribution](#70-contribution)
 	- [8.0 Challenges Faced](#80-challenges-faced)
+ 	- [9.0 Conclusion](#90-conclusion)
 
 --- 
 
-## 1.0 Team Members
+## Team Members
 
 | NO | NAME | MATRIX NUMBER |
 | :---: | --- | :---: |
@@ -28,6 +30,12 @@
 | 3 | LAW XIN WEY | 25062483 |
 | 4 | KEERTTI A/P RASANRAN | 24057852 |
 | 5 | HAN NING | 25067696 |
+
+---
+
+## 1.0 Problem Statement
+
+Traditional library management systems often rely on inefficient data storage methods, such as flat arrays or manual logging, which lead to slow search times—especially as the database grows. Furthermore, managing concurrent demand for popular books and tracking complex user histories requires a system that can handle dynamic state changes efficiently. A linear approach results in an $O(n)$ time complexity that bottlenecks operations. This project addresses the need for a high-performance, automated library system that leverages specialized data structures to optimize data retrieval, ensure fair book distribution, and maintain secure, persistent transaction records.
 
 ---
 
@@ -117,5 +125,11 @@ SMARTLIBRARYSYSTEM/
 
 1. One of the main challenges faced during the development process was integrating multiple data structures such as Binary Search Tree (BST), Stack, and ADT Interface into one complete system. The group needed to ensure that all components could work together smoothly without affecting each other’s functionality.
 2. Implementing the BST for book searching was challenging because recursive insertion and searching methods were required. Proper handling of the left and right nodes was important to ensure books were stored and retrieved correctly based on ISBN values.
+
+---
+
+## 9.0 Conclusion
+
+The Smart Library System successfully demonstrates the practical efficiency of core data structures in managing real-world information. By correctly applying a Binary Search Tree for rapid data retrieval, a Stack for chronological history tracking, and a Queue for fair waitlist management, the project effectively solved the performance bottlenecks found in standard library arrays. Coupled with integrated CSV data persistence and automated fine calculation, the final application provides a robust, scalable, and technically sound solution for library administration. 
 
 ---
