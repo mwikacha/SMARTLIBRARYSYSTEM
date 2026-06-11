@@ -17,7 +17,7 @@ public class Menu {
             if (sc.hasNextInt()) {
                 int choice = sc.nextInt();
 
-                if (choice == 7) {
+                if (choice == 8) {
                     keepRunning = false;
                     System.out.println("Exiting Smart Library System. Goodbye!");
                 } else {
@@ -36,12 +36,13 @@ public class Menu {
         System.out.println("    Smart Library Menu");       // 4 Space
         System.out.println("--------------------------");
         System.out.println("[1] Add Book");
-        System.out.println("[2] Search Book ");
-        System.out.println("[3] Borrow / Join Waitlist"); // Adjusted label
-        System.out.println("[4] History");
-        System.out.println("[5] Return Book");
-        System.out.println("[6] View Book Waitlist"); // NEW option
-        System.out.println("[7] Exit");
+        System.out.println("[2] Delete Book");
+        System.out.println("[3] Search Book "); // BST
+        System.out.println("[4] Borrow / Join Waitlist"); // Stack
+        System.out.println("[5] History");
+        System.out.println("[6] Return Book");
+        System.out.println("[7] View Book Waitlist"); // Queue
+        System.out.println("[8] Exit");
         System.out.println("--------------------------");
     }
 
@@ -64,6 +65,17 @@ public class Menu {
                 break;
             
             case 2:
+                System.out.print("Enter ISBN to delete: ");
+                if (sc.hasNextInt()) {
+                    int deleteIsbn = sc.nextInt();
+                    library.deleteBook(deleteIsbn);
+                } else {
+                    sc.next();
+                    System.out.println("Error: ISBN must be a valid integer!");
+                }
+                break;
+
+            case 3:
                 System.out.print("Enter ISBN to search: ");
                 if (sc.hasNextInt()) {
                     int searchIsbn = sc.nextInt();
@@ -74,7 +86,7 @@ public class Menu {
                 }
                 break;
 
-            case 3:
+            case 4:
                 System.out.print("Enter ISBN to borrow: ");
 
                 if (sc.hasNextInt()) {
@@ -86,14 +98,14 @@ public class Menu {
 
                     if (library.isBookBorrowed(borrowIsbn)) {
 
-                        System.out.println("Book is currently borrowed.");
+                        System.out.println("\nCannot Borrowed: Book is currently checked out.");
                         System.out.print("Join waitlist? (Y/N): ");
                         String answer = sc.nextLine();
 
                         if (answer.equalsIgnoreCase("Y")) {
                             library.joinWaitlist(borrowIsbn, name);
                         } else {
-                            System.out.println("Cancelled.");
+                            System.out.println("Cancelled. Returning back to the menu...");
                         }
 
                     } else {
@@ -106,12 +118,12 @@ public class Menu {
                 }
                 break;
 
-            case 4:
+            case 5:
                 System.out.println("Displaying History ......");
                 library.displayLatestHistory();
                 break;
 
-            case 5:
+            case 6:
                 System.out.print("Enter ISBN to return: ");
                 if (sc.hasNextInt()) {
                     int returnIsbn = sc.nextInt();
@@ -126,7 +138,7 @@ public class Menu {
                 }  
                 break;      
                 
-            case 6: // NEW: Option execution to check waitlists
+            case 7: // NEW: Option execution to check waitlists
                 System.out.print("Enter Book ISBN to view waitlist: ");
                 if (sc.hasNextInt()) {
                     int queueIsbn = sc.nextInt();

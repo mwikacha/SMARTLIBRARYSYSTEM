@@ -2,23 +2,30 @@ import java.util.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+
 public class BorrowHistory {
     private Stack<Book> borrowHistory = new Stack<>();
 
+    // Called when student borrows a book
     public void push(Book book) {
-        if (book == null) return;
+        if (book == null) {
+            System.out.println("\nError: Cannot add a null record to history.");
+            return;
+        }
         borrowHistory.push(book);
-        System.out.println("\"" + book.getTitle() + "\" added to history.");
+        System.out.println("\n\"" + book.getTitle() + "\" has been added to borrow history.");
     }
 
+    // Display all borrowed books, newest first
     public void viewHistory() {
         if (borrowHistory.isEmpty()) {
-            System.out.println("No history.");
+            System.out.println("\nNo borrowing history found.");
             return;
         }
 
         System.out.println("\n--- Borrow History ---");
 
+        // LIFO order
         for (int i = borrowHistory.size() - 1; i >= 0; i--) {
             Book b = borrowHistory.get(i);
             System.out.printf("[%d] %d | %s | %s%n",
@@ -43,6 +50,7 @@ public class BorrowHistory {
         return null;
     }
 
+    // Getter so SmartLibrary can search and remove from the stack
     public Stack<Book> getStack() {
         return borrowHistory;
     }
@@ -52,7 +60,7 @@ public class BorrowHistory {
         LocalDate today = LocalDate.now();
         boolean found = false;
 
-        System.out.println("\n===== Due Reminder =====");
+        System.out.println("\n--- Due Date Reminder ---");
 
         for (Book b : borrowHistory) {
 
@@ -74,7 +82,7 @@ public class BorrowHistory {
         }
 
         if (!found) {
-            System.out.println("No reminders.");
+            System.out.println("\nNo due date reminders.");
         }
     }
 }

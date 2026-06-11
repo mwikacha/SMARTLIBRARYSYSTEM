@@ -3,10 +3,12 @@ import java.io.PrintWriter;
 public class BookBST {
     private Book root;
 
+    // Public insert method
     public void insert(int isbn, String t, String a) {
         root = ins(root, isbn, t, a);
     }
 
+    // Private recursive insert helper
     private Book ins(Book r, int i, String t, String a) {
         if (r == null) return new Book(i, t, a);
 
@@ -18,10 +20,12 @@ public class BookBST {
         return r;
     }
 
+    // Public search method
     public Book search(int i) {
         return sea(root, i);
     }
 
+    // Private recursive search helper
     private Book sea(Book r, int i) {
         if (r == null || r.getIsbn() == i) return r;
 
@@ -30,10 +34,12 @@ public class BookBST {
                 : sea(r.right, i);
     }
 
+    // Public delete method
     public void remove(int isbn) {
         root = deleteNode(root, isbn);
     }
 
+    // Private recursive delete helper
     private Book deleteNode(Book node, int isbn) {
         if (node == null) return null;
 

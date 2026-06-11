@@ -30,7 +30,16 @@ public class SmartLibrary implements LibraryADT {
                 String title = data[1];
                 String author = data[2];
 
-                catalogue.insert(isbn, title, author);
+                    // Failsafe for missing author text
+                    if (author.isEmpty()) {
+                        author = "Unknown Author";
+                    }
+
+                    catalogue.insert(isbn, title, author);
+
+                } catch (Exception e) {
+                    continue;
+                }
             }
 
             System.out.println("CSV loaded.");
@@ -43,7 +52,7 @@ public class SmartLibrary implements LibraryADT {
     public void saveToCSV() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(FILE_NAME))) {
 
-            pw.println("isbn,title,author");
+            pw.println("ISBN,Title,Author");
             catalogue.inorderToCSV(catalogue.getRoot(), pw);
 
         } catch (IOException e) {
@@ -53,6 +62,7 @@ public class SmartLibrary implements LibraryADT {
 
     public void initSystem() {
         loadFromCSV();
+        loadBorrowHistory();
     }
 
     private void saveBorrowRecord(Book book, String studentName) {
@@ -81,29 +91,99 @@ public class SmartLibrary implements LibraryADT {
         }
     }
 
+    public void loadBorrowHistory() {
+
+        File file = new File(BORROW_FILE);
+
+        if (!file.exists()) return; 
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            boolean first = true;
+
+            while ((line = br.readLine()) != null) {
+                if (first) { first = false; continue; } // Skip the header row
+
+                String[] data = line.split(",");
+
+                int isbn = Integer.parseInt(data[0].trim());
+                String title = data[1].trim();
+                String author = data[2].trim();
+                String studentName = data[3].trim();
+                String borrowDate = data[4].trim(); 
+                String dueDate = data[5].trim();
+
+                Book borrowedBook = new Book(isbn, title, author); 
+                
+                borrowedBook.setBorrowInfo(studentName, borrowDate, dueDate);
+
+                history.push(borrowedBook);
+            }
+            System.out.println("Borrow history loaded.");
+
+        } catch (Exception e) {
+            System.out.println("Error loading borrow history.");
+        }
+    }
+
     @Override
     public void addBook(int isbn, String title, String author) {
 
         if (catalogue.search(isbn) != null) {
-            System.out.println("Book exists!");
+            System.out.println("\nCannot Add: Book already exists!");
+            return;
+        }
+
+        if (isBookBorrowed(isbn)) {
+            System.out.println("\nCannot Add: Book already exists and currently borrowed.");
             return;
         }
 
         catalogue.insert(isbn, title, author);
         saveToCSV();
 
-        System.out.println("Added: " + title);
+        System.out.println("\nBook added: \"" + title + "\" (ISBN: " + isbn + ")");
+    }
+
+    @Override
+    public void deleteBook(int isbn) {
+
+        if (isBookBorrowed(isbn)) {
+            System.out.println("\nCannot Delete: Book with ISBN " + isbn + " is currently checked out!");
+            System.out.println("[!] Must wait for the student to return it before permanent deletion.");
+            return;
+        }
+
+        Book toDelete = catalogue.search(isbn);
+
+        if (toDelete == null) {
+            System.out.println("\nCannot Delete: Book with ISBN " + isbn + " does not exist in the catalogue.");
+            return;
+        }
+
+        catalogue.remove(isbn);
+        
+        saveToCSV();
+        
+        System.out.println("\nDeleted: \"" + toDelete.getTitle() + "\" has been permanently removed from the catalogue.");
     }
 
     @Override
     public void searchBook(int isbn) {
 
-        Book b = catalogue.search(isbn);
+        Book found = catalogue.search(isbn);
 
-        if (b != null) {
-            System.out.println(b);
+        if (found != null) {
+            System.out.println("\nBook Found: " + found + " | [Status] : Available");
+            return;
+        }
+
+        Book borrowed = history.getBorrowedBook(isbn);
+
+        if (borrowed != null) {
+            System.out.println("\nBook Found: " + borrowed + " | [Status] : Being Borrowed");
         } else {
-            System.out.println("Borrowed or not found.");
+            System.out.println("\nBook not found.");
         }
     }
 
@@ -113,7 +193,7 @@ public class SmartLibrary implements LibraryADT {
         Book book = catalogue.search(isbn);
 
         if (book == null) {
-            System.out.println("Not available.");
+            System.out.println("\nCannot Borrow: Book does not exist in the catalogue.");
             return;
         }
 
@@ -122,13 +202,18 @@ public class SmartLibrary implements LibraryADT {
         history.push(book);
 
         catalogue.remove(isbn);
+        System.out.println("This book has been removed from the available catalogue.");
 
         saveBorrowRecord(book, studentName); // ⭐ NEW CSV LOG
 
         saveToCSV(); // inventory CSV
 
-        System.out.println("Borrowed: " + book.getTitle());
-        System.out.println("Due: " + book.getDueDate());
+        System.out.println("\n--- Borrowed Book Details ---");
+        System.out.println("Book     : " + book.getTitle());
+        System.out.println("Borrower : " + studentName);
+        System.out.println("Borrow Date : " + book.getBorrowDate());
+        System.out.println("Due Date    : " + book.getDueDate());
+        System.out.println("[!] Return before due date to avoid fine!");
     }
 
     @Override
@@ -145,19 +230,50 @@ public class SmartLibrary implements LibraryADT {
         }
 
         if (book == null) {
-            System.out.println("Return failed.");
+            System.out.println("\nReturn failed: Book is currently not checked out.");
             return;
         }
 
         double fine = book.calculateFine(lateDays);
 
+        System.out.println("\n--- Return Book Summary ---");
+        System.out.println("Returned: \"" + book.getTitle() + "\"");
+
+        if (lateDays > 0) {
+            System.out.printf("Late by %d days. Fine: RM%.2f%n", lateDays, fine);
+        } else {
+            System.out.println("Returned on time. No fine charged.");
+        }
+
+        // Physically take the book out of the borrowed stacK
         stack.remove(book);
-        catalogue.insert(book.getIsbn(), book.getTitle(), book.getAuthor());
+
+        if (book.hasWaitlist()) {
+
+            String next = book.getNextInWaitlist();
+
+            System.out.println("\n[!] Wailist Alert: " + next + " is on the waitlist of this book");
+
+            book.setBorrowInfo(next);
+
+            history.push(book);
+
+            System.out.println("Automatically checking out book to the next student: " + next);
+
+            saveBorrowRecord(book, next);
+
+        } else {
+
+            System.out.println("Returned to catalogue.");
+
+            catalogue.insert(
+                    book.getIsbn(),
+                    book.getTitle(),
+                    book.getAuthor()
+            );
+        }
 
         saveToCSV();
-
-        System.out.println("Returned: " + book.getTitle());
-        System.out.println("Fine: RM" + fine);
     }
 
     @Override
@@ -168,31 +284,39 @@ public class SmartLibrary implements LibraryADT {
     @Override
     public void viewWaitlist(int isbn) {
 
-        Book book = catalogue.search(isbn);
+        Book book = history.getBorrowedBook(isbn);
 
         if (book == null || !book.hasWaitlist()) {
-            System.out.println("No waitlist.");
+            System.out.println("\nNo waitlist.");
             return;
         }
 
+        System.out.println("\n--- Waitlist Queue for \"" + book.getTitle() + "\" ---");
+
         int i = 1;
         for (String s : book.getWaitlist()) {
-            System.out.println(i++ + ". " + s);
+            System.out.println("[" + i++ + "] " + s);
         }
     }
 
     @Override
     public void joinWaitlist(int isbn, String studentName) {
 
-        Book book = catalogue.search(isbn);
+        Book book = history.getBorrowedBook(isbn);
 
         if (book == null) {
-            System.out.println("Book not found.");
+            System.out.println("\nBook not currently borrowed.");
+            return;
+        }
+
+        if (studentName.equalsIgnoreCase(book.getBorrower())) {
+            System.out.println("--> You are already borrowing this book.");
             return;
         }
 
         book.addToWaitlist(studentName);
-        System.out.println("Added to waitlist.");
+
+        System.out.println("--> " + studentName + " has been added to waitlist. (Queue Position: " + book.getWaitlist().size() + ")");
     }
 
     @Override

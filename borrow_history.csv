@@ -1,4 +1,7 @@
-ISBN,Title,Author,StudentName,BorrowDate,DueDate
-3200,Love VS Hate,Elsa,jane,2026-06-09,2026-06-23
-2000,Malaysia one better,lisa,rose,2026-06-09,2026-06-23
-3300,Learn To Programming,David,jennie,2026-06-09,2026-06-23
+1002,PYTHON BASICS,John Lenon,Terry,2026-06-10,2026-06-24
+1002,PYTHON BASICS,John Lenon,Jennie,2026-06-10,2026-06-24
+1002,PYTHON BASICS,John Lenon,Charlotte,2026-06-10,2026-06-24
+1002,PYTHON BASICS,John Lenon,Adam,2026-06-10,2026-06-24
+1002,PYTHON BASICS,John Lenon,Jennie,2026-06-10,2026-06-24
+1712,The Little Prince,Antoine de Saint-Exupery,Adam,2026-06-10,2026-06-24
+2900,To Kill a Mockingbird,Harper Lee,Julie,2026-06-10,2026-06-24

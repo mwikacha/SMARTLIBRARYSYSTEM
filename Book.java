@@ -28,14 +28,16 @@ public class Book {
     public int getIsbn() { return isbn; }
     public String getTitle() { return title; }
     public String getAuthor() { return author; }
-
     public double getFine() { return fine; }
-
     public LocalDate getBorrowDate() { return borrowDate; }
-    public LocalDate getDueDate() { return dueDate; }
-    public String getBorrower() { return borrower; }
 
-    // setters
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public String getBorrower() {
+        return borrower;
+    }
     public void setIsbn(int isbn) { this.isbn = isbn; }
     public void setTitle(String title) { this.title = title; }
     public void setAuthor(String author) { this.author = author; }
@@ -46,17 +48,23 @@ public class Book {
         this.dueDate = borrowDate.plusDays(14);
     }
 
-    // waitlist
+    public void setBorrowInfo(String studentName, String pastBorrowDate, String pastDueDate) {
+        this.borrower = studentName;
+        this.borrowDate = LocalDate.parse(pastBorrowDate);
+        this.dueDate = LocalDate.parse(pastDueDate);
+    }
+    
+    // NEW: Waitlist Helper Methods
     public void addToWaitlist(String studentName) {
         if (!waitlist.contains(studentName)) {
             waitlist.add(studentName);
         } else {
-            System.out.println(studentName + " already in waitlist.");
+            System.out.println(studentName + " is already in the waitlist.");
         }
     }
 
     public String getNextInWaitlist() {
-        return waitlist.poll();
+        return waitlist.poll();         // Removes and returns the front of the queue
     }
 
     public boolean hasWaitlist() {
