@@ -36,10 +36,6 @@ public class SmartLibrary implements LibraryADT {
                     }
 
                     catalogue.insert(isbn, title, author);
-
-                } catch (Exception e) {
-                    continue;
-                }
             }
 
             System.out.println("CSV loaded.");
