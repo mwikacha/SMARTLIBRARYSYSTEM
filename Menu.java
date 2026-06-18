@@ -25,7 +25,7 @@ public class Menu {
                 }
             } else {
                 String invalid = sc.next(); 
-                System.out.println("Invalid input! '" + invalid + "' is not a number. Please enter 1-7.");
+                System.out.println("Invalid input! '" + invalid + "' is not a number. Please enter 1-8.");
             }
         }
         sc.close(); 
@@ -77,11 +77,19 @@ public class Menu {
 
             case 3:
                 System.out.print("Enter ISBN to search: ");
-                if (sc.hasNextInt()) {
-                    int searchIsbn = sc.nextInt();
+                sc.nextLine();
+
+                String input = sc.nextLine().trim();
+
+                if (input.isEmpty()) {
+                    System.out.println("Please enter an ISBN.");
+                    break;
+                }
+
+                try {
+                    int searchIsbn = Integer.parseInt(input);
                     library.searchBook(searchIsbn);
-                } else {
-                    sc.next();
+                } catch (NumberFormatException e) {
                     System.out.println("Error: ISBN must be a valid integer!");
                 }
                 break;

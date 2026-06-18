@@ -15,7 +15,7 @@ public class Book {
     // BST pointers
     Book left, right;
 
-    // waitlist belongs to BOOK (correct design)
+    // waitlist belongs to BOOK
     private Queue<String> waitlist = new LinkedList<>();
 
     public Book(int isbn, String title, String author) {
@@ -54,7 +54,7 @@ public class Book {
         this.dueDate = LocalDate.parse(pastDueDate);
     }
     
-    // NEW: Waitlist Helper Methods
+    // Waitlist Helper Methods
     public void addToWaitlist(String studentName) {
         if (!waitlist.contains(studentName)) {
             waitlist.add(studentName);

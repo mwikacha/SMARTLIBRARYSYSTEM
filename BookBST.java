@@ -1,8 +1,7 @@
 import java.io.PrintWriter;
-
+//designed to manage a collection of Book objects efficiently using ISBN as the key.
 public class BookBST {
     private Book root;
-
     // Public insert method
     public void insert(int isbn, String t, String a) {
         root = ins(root, isbn, t, a);
@@ -48,7 +47,6 @@ public class BookBST {
         } else if (isbn > node.getIsbn()) {
             node.right = deleteNode(node.right, isbn);
         } else {
-
             if (node.left == null) return node.right;
             if (node.right == null) return node.left;
 

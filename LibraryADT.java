@@ -12,6 +12,4 @@ public interface LibraryADT {
 
     void viewWaitlist(int isbn);
     void joinWaitlist(int isbn, String studentName);
-
-    void checkDueDateReminder();
 }
