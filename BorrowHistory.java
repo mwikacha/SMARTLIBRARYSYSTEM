@@ -1,8 +1,7 @@
 import java.util.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
-
+//track and manage a student’s book borrowing records using a Stack (LIFO structure)
 public class BorrowHistory {
     private Stack<Book> borrowHistory = new Stack<>();
 

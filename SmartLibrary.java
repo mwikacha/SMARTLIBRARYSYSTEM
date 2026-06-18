@@ -87,6 +87,45 @@ public class SmartLibrary implements LibraryADT {
         }
     }
 
+    private void removeBorrowRecord(int isbn) {
+
+        File inputFile = new File(BORROW_FILE);
+        File tempFile = new File("temp.csv");
+
+        try (
+                BufferedReader br = new BufferedReader(new FileReader(inputFile));
+                PrintWriter pw = new PrintWriter(new FileWriter(tempFile))
+        ) {
+
+            String line;
+            boolean first = true;
+
+            while ((line = br.readLine()) != null) {
+
+                if (first) {
+                    pw.println(line); // keep header
+                    first = false;
+                    continue;
+                }
+
+                String[] data = line.split(",");
+
+                int recordISBN = Integer.parseInt(data[0].trim());
+
+                if (recordISBN != isbn) {
+                    pw.println(line);
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error updating borrow history file.");
+            return;
+        }
+
+        inputFile.delete();
+        tempFile.renameTo(inputFile);
+    }
+
     public void loadBorrowHistory() {
 
         File file = new File(BORROW_FILE);
@@ -174,6 +213,7 @@ public class SmartLibrary implements LibraryADT {
             return;
         }
 
+
         Book borrowed = history.getBorrowedBook(isbn);
 
         if (borrowed != null) {
@@ -243,6 +283,8 @@ public class SmartLibrary implements LibraryADT {
 
         // Physically take the book out of the borrowed stacK
         stack.remove(book);
+
+        removeBorrowRecord(isbn);
 
         if (book.hasWaitlist()) {
 
@@ -314,12 +356,6 @@ public class SmartLibrary implements LibraryADT {
 
         System.out.println("--> " + studentName + " has been added to waitlist. (Queue Position: " + book.getWaitlist().size() + ")");
     }
-
-    @Override
-    public void checkDueDateReminder() {
-        history.checkDueDateReminder();
-    }
-
     public boolean isBookBorrowed(int isbn) {
         return history.isBorrowed(isbn);
     }
